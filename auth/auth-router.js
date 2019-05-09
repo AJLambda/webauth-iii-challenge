@@ -24,6 +24,7 @@ router.post("/login", (req, res) => {
   Users.findBy({ username })
     .first()
     .then(user => {
+      console.log(user);
       if (user && bcrypt.compareSync(password, user.password)) {
         const token = generateToken(user);
         res.status(200).json({
@@ -42,7 +43,8 @@ router.post("/login", (req, res) => {
 function generateToken(user) {
   const payload = {
     subject: user.id, // what the token is describing
-    username: user.username
+    username: user.username,
+    roles: user.department
   };
   const options = {
     expiresIn: "1h"
