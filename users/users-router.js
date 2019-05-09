@@ -7,7 +7,7 @@ const restricted = require("../auth/restricted-middleware.js");
 router.get("/", restricted, checkRole("department3"), (req, res) => {
   Users.find()
     .then(users => {
-      res.json({ users, decodedToken: req.decodedToken });
+      res.json({ users /* decodedToken: req.decodedToken*/ });
     })
     .catch(err => res.send(err));
 });

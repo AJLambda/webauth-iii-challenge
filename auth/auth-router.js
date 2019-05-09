@@ -11,8 +11,11 @@ router.post("/register", (req, res) => {
   user.password = hash;
 
   Users.add(user)
-    .then(saved => {
-      res.status(201).json(saved);
+
+    .then(user => {
+      console.log(user);
+      const token = generateToken(user);
+      res.status(201).json({ user, token });
     })
     .catch(error => {
       res.status(500).json(error);
@@ -22,6 +25,7 @@ router.post("/register", (req, res) => {
 router.post("/login", (req, res) => {
   let { username, password } = req.body;
   Users.findBy({ username })
+
     .first()
     .then(user => {
       console.log(user);
